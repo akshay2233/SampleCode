@@ -1,0 +1,77 @@
+<h2 mat-dialog-title style="text-align: center;">{{title}} Task</h2>
+<form class="form-container" [formGroup]="taskformForm" novalidate (ngSubmit)="onSubmit()">
+
+    <mat-dialog-content class="mat-typography">
+        <mat-form-field appearance="outline">
+            <mat-label>Title</mat-label>
+            <input formControlName="title" matInput placeholder="Title">
+            <mat-error *ngIf="taskformForm.controls.description.invalid"> Title is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea formControlName="description" matInput placeholder="Description"></textarea>
+            <mat-error *ngIf="taskformForm.controls.description.invalid"> Description is required</mat-error>
+
+        </mat-form-field>
+        <mat-grid-list cols="2" rowHeight="90px">
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Due Date</mat-label>
+                    <input formControlName="dueDate" matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="taskformForm.controls.dueDate.invalid"> Description is required</mat-error>
+
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <label id="example-radio-group-label">Type:</label>
+                <mat-radio-group  formControlName="type" aria-labelledby="example-radio-group-label" class="example-radio-group">
+                    <mat-radio-button class="example-radio-button" *ngFor="let label of lstType" [value]="label.value">
+                        {{label.name}}
+                    </mat-radio-button>
+                </mat-radio-group>            
+
+
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Priority</mat-label>
+                    <mat-select formControlName="priority">
+                        <mat-option *ngFor="let item of lstPriority" [value]="item.value">
+                            {{item.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="taskformForm.controls.priority.invalid"> priority is required</mat-error>
+
+                </mat-form-field>
+
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Lables</mat-label>
+                    <mat-select formControlName="label" multiple>
+                        <mat-option *ngFor="let lable of lstLable" [value]="lable.value">{{lable.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="taskformForm.controls.label.invalid"> label is required</mat-error>
+
+                </mat-form-field>
+
+            </mat-grid-tile>
+        </mat-grid-list>
+
+
+        <div>
+
+            <!-- <button class="btn-block" mat-raised-button>CONTINUE</button> -->
+
+        </div>
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <button class="textButton" type="button" (click)="fnCancel()" mat-stroked-button>CANCEL</button>
+        <button class="submit-btn" mat-raised-button>&nbsp;CREATE&nbsp;</button>
+
+    </mat-dialog-actions>
+</form>
